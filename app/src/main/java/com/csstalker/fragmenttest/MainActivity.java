@@ -82,8 +82,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        
+        // 點擊後關閉抽屜
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
