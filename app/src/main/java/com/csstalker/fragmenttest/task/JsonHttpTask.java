@@ -24,6 +24,17 @@ public class JsonHttpTask extends AsyncTask<String, String, Object> {
     private RequestBody body;
     private String url;
 
+    public JsonHttpTask(String url, Class<?> c, OnJsonTaskCompleteListener jtcListener) {
+        this.c = c;
+        this.url = url;
+        this.jtcListener = jtcListener;
+        client = new OkHttpClient.Builder()
+                .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+                .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+                .build();
+    }
+
     public JsonHttpTask(String url, RequestBody body, Class<?> c, OnJsonTaskCompleteListener jtcListener) {
         this.c = c;
         this.url = url;
@@ -56,9 +67,17 @@ public class JsonHttpTask extends AsyncTask<String, String, Object> {
     }
 
     private Request getRequest(String url, RequestBody body) {
-        return new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
+        if (body == null) {
+            // get
+            return new Request.Builder()
+                    .url(url)
+                    .build();
+        } else {
+            // post
+            return new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build();
+        }
     }
 }

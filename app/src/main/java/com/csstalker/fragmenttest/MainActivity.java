@@ -3,6 +3,7 @@ package com.csstalker.fragmenttest;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,6 +14,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+
+import com.csstalker.fragmenttest.api.APITool;
+import com.csstalker.fragmenttest.gson.object.PlanetBase;
+import com.csstalker.fragmenttest.gson.object.ZoneBase;
+import com.csstalker.fragmenttest.gson.object.ZoneData;
+import com.csstalker.fragmenttest.gson.object.ZoneResult;
+import com.csstalker.fragmenttest.task.JsonHttpTask;
+import com.csstalker.fragmenttest.task.OnJsonTaskCompleteListener;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
+import kotlin.text.Charsets;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -82,9 +98,40 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         }
-        
+
         // 點擊後關閉抽屜
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void onClickZoo(View v) {
+        JsonHttpTask task = new JsonHttpTask(APITool.getInstance().getZoneUrl(), ZoneBase.class, new OnJsonTaskCompleteListener() {
+            @Override
+            public void onTaskComplete(Object object) {
+                ZoneBase zb = (ZoneBase) object;
+                Log.d(TAG, "onTaskComplete: " + zb.result.zoneList.size());
+            }
+        });
+        task.execute();
+    }
+
+    public void onClickPlanet(View v) {
+        String url = APITool.getInstance().getPlanetUrl();
+
+        try {
+            url = url + "&q=" + URLEncoder.encode("兩棲爬蟲動物館", "UTF-8");
+        } catch (Exception e) {
+            Log.e(TAG, "onClickPlanet: " + e.getMessage());
+        }
+
+
+        JsonHttpTask task = new JsonHttpTask(url, PlanetBase.class, new OnJsonTaskCompleteListener() {
+            @Override
+            public void onTaskComplete(Object object) {
+                PlanetBase pb = (PlanetBase) object;
+                Log.d(TAG, "onTaskComplete: " + pb.result.planetList.size());
+            }
+        });
+        task.execute();
     }
 }
