@@ -19,5 +19,5 @@ public class ZoneResult {
     public String sort;
 
     @SerializedName("results")
-    public List<ZoneResult> zoneList;
+    public List<ZoneData> zoneList;
 }

@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.csstalker.fragmenttest.api.APITool;
 import com.csstalker.fragmenttest.app.ContainerActivity;
+import com.csstalker.fragmenttest.app.HomeActivity;
 import com.csstalker.fragmenttest.gson.object.PlanetBase;
 import com.csstalker.fragmenttest.gson.object.ZoneBase;
 import com.csstalker.fragmenttest.task.JsonHttpTask;
@@ -150,5 +151,9 @@ public class MainActivity extends AppCompatActivity
     public void toContainer(View view) {
         Intent intent = new Intent(this, ContainerActivity.class);
         startActivity(intent);
+    }
+
+    public void onClickHome(View view) {
+        startActivity(new Intent(this, HomeActivity.class));
     }
 }

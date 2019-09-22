@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.csstalker.fragmenttest.R;
 
-public class ContainerActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener {
+public class ContainerActivity extends AppCompatActivity {
 
     // 實際會用來當作容器的 activity
     private static final String TAG = ContainerActivity.class.getSimpleName();
@@ -17,8 +17,5 @@ public class ContainerActivity extends AppCompatActivity implements HomeFragment
         setContentView(R.layout.activity_home);
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-        // todo: ?!?!
-    }
+
 }
