@@ -1,8 +1,10 @@
 package com.csstalker.fragmenttest;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
@@ -13,22 +15,15 @@ import android.support.v4.widget.DrawerLayout;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 
 import com.csstalker.fragmenttest.api.APITool;
+import com.csstalker.fragmenttest.app.ContainerActivity;
 import com.csstalker.fragmenttest.gson.object.PlanetBase;
 import com.csstalker.fragmenttest.gson.object.ZoneBase;
-import com.csstalker.fragmenttest.gson.object.ZoneData;
-import com.csstalker.fragmenttest.gson.object.ZoneResult;
 import com.csstalker.fragmenttest.task.JsonHttpTask;
 import com.csstalker.fragmenttest.task.OnJsonTaskCompleteListener;
 
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-
-import kotlin.text.Charsets;
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -89,13 +84,7 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.app_version) {
 
         }
 
@@ -108,10 +97,12 @@ public class MainActivity extends AppCompatActivity
         JsonHttpTask task = new JsonHttpTask(APITool.getInstance().getZoneUrl(), ZoneBase.class, new OnJsonTaskCompleteListener() {
             @Override
             public void onTaskComplete(Object object) {
+                dismissLoadingHint();
                 ZoneBase zb = (ZoneBase) object;
                 Log.d(TAG, "onTaskComplete: " + zb.result.zoneList.size());
             }
         });
+        showLoadingHint();
         task.execute();
     }
 
@@ -128,10 +119,36 @@ public class MainActivity extends AppCompatActivity
         JsonHttpTask task = new JsonHttpTask(url, PlanetBase.class, new OnJsonTaskCompleteListener() {
             @Override
             public void onTaskComplete(Object object) {
+                dismissLoadingHint();
                 PlanetBase pb = (PlanetBase) object;
                 Log.d(TAG, "onTaskComplete: " + pb.result.planetList.size());
             }
         });
+        showLoadingHint();
         task.execute();
+    }
+
+    private ProgressDialog loadingHint;
+
+    private void showLoadingHint() {
+        if (!isLoadingHintShowing())
+            loadingHint = ProgressDialog.show(this, "", getString(R.string.loading), true);
+    }
+
+    private void dismissLoadingHint() {
+        if (isLoadingHintShowing())
+            loadingHint.dismiss();
+    }
+
+    private boolean isLoadingHintShowing() {
+        if (loadingHint != null && loadingHint.isShowing())
+            return true;
+        else
+            return false;
+    }
+
+    public void toContainer(View view) {
+        Intent intent = new Intent(this, ContainerActivity.class);
+        startActivity(intent);
     }
 }
