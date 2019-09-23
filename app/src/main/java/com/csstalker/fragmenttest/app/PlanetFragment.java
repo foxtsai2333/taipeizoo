@@ -6,43 +6,44 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.csstalker.fragmenttest.R;
+import com.csstalker.fragmenttest.gson.GsonTool;
+import com.csstalker.fragmenttest.gson.object.PlanetData;
+import com.csstalker.fragmenttest.image.GlideConfig;
+import com.csstalker.fragmenttest.utils.Utils;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PlanetFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PlanetFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final String ARG_PLANET = "ARG_PLANET";
 
+    // view
+    private ImageView planetImage;
+    private TextView planetChineseNameText;
+    private TextView planetEnglishNameText;
+    private TextView planetAliasNameText;
+    private TextView planetDescText;
+    private TextView planetIdentifyText;
+    private TextView planetFunctionalText;
+    private TextView updateDateText;
 
+    // misc
+    private String planetStr;
+    private PlanetData planet;
+    
+    
     public PlanetFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PlanetFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PlanetFragment newInstance(String param1, String param2) {
+    
+    public static PlanetFragment newInstance(String planetStr) {
         PlanetFragment fragment = new PlanetFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PLANET, planetStr);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,16 +52,62 @@ public class PlanetFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            planetStr = getArguments().getString(ARG_PLANET);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_planet, container, false);
+        // inflate view
+        View itemView = inflater.inflate(R.layout.fragment_planet, container, false);
+        planetImage = itemView.findViewById(R.id.planet_image);
+        planetChineseNameText = itemView.findViewById(R.id.planet_chinese_name_text);
+        planetEnglishNameText = itemView.findViewById(R.id.planet_english_name_text);
+        planetAliasNameText = itemView.findViewById(R.id.planet_alias_name_text);
+        planetDescText = itemView.findViewById(R.id.planet_desc_text);
+        planetIdentifyText = itemView.findViewById(R.id.planet_identify_text);
+        planetFunctionalText = itemView.findViewById(R.id.planet_functional_text);
+        updateDateText = itemView.findViewById(R.id.update_date_text);
+
+        setPlanetData();
+
+        return itemView;
+    }
+    
+    private void setPlanetData() {
+        if (planetStr == null || "".equals(planetStr))
+            Toast.makeText(getContext(), "something wrong...", Toast.LENGTH_LONG).show();
+        else {
+            planet = (PlanetData) GsonTool.getInstance()
+                    .stringToObject(planetStr, PlanetData.class);
+
+            // set data
+            if (planet != null) {
+                // 圖片
+                String imageUrl = planet.img;
+                if (imageUrl != null && !"".equals(imageUrl)) {
+                    Glide.with(this)
+                            .load(imageUrl)
+                            .apply(GlideConfig.getInstance().getGlideOption())
+                            .into(planetImage);
+                }
+                // 中文名
+                planetChineseNameText.setText(Utils.getInstance().checkDisplayText(planet.chineseName));
+                // 英文名
+                planetEnglishNameText.setText(Utils.getInstance().checkDisplayText(planet.englishName));
+                // 別名
+                planetAliasNameText.setText(Utils.getInstance().checkDisplayText(planet.alsoKnown));
+                // 簡介
+                planetDescText.setText(Utils.getInstance().checkDisplayText(planet.brief));
+                // 辨認方式
+                planetIdentifyText.setText(Utils.getInstance().checkDisplayText(planet.feature));
+                // 功能性
+                planetFunctionalText.setText(Utils.getInstance().checkDisplayText(planet.funtional));
+                // 更新日期
+                updateDateText.setText(Utils.getInstance().checkDisplayText(planet.updateDate));
+            }
+        }
     }
 
 }

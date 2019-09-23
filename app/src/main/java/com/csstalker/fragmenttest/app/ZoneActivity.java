@@ -36,6 +36,8 @@ public class ZoneActivity extends BaseActivity implements OnPlanetItemClickListe
     private static final String TAG = ZoneActivity.class.getSimpleName();
     private ZoneData zone;
     private String zoneStr, planetStr;
+    private ZoneFragment zoneFragment;
+    private FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,16 +68,16 @@ public class ZoneActivity extends BaseActivity implements OnPlanetItemClickListe
     // 設定介紹跟植物列表
     private void setupFragment() {
         // 取得 fragment manager
-        FragmentManager fm = getSupportFragmentManager();
+        fm = getSupportFragmentManager();
         // 建立 fragment transcation
         FragmentTransaction ft = fm.beginTransaction();
         // 新增要加入的 fragment
         //ZoneFragment zoneFragment = new ZoneFragment();
-        ZoneFragment zoneFragment = ZoneFragment.newInstance(zoneStr, planetStr);
+        zoneFragment = ZoneFragment.newInstance(zoneStr, planetStr);
         zoneFragment.setOnPlanetItemClickListener(this);
         //PlanetFragment planetFragment = new PlanetFragment();
         // 加入 fragment
-        ft.add(R.id.container, zoneFragment, "zone");
+        ft.add(R.id.container, zoneFragment);
         // 送出
         ft.commit();
         // 要求立即處理 pending 的作業
@@ -113,6 +115,12 @@ public class ZoneActivity extends BaseActivity implements OnPlanetItemClickListe
         intent.setAction(Intent.ACTION_VIEW);
         startActivity(intent);
         */
+        FragmentTransaction ft = fm.beginTransaction();
+        String str = GsonTool.getInstance().objectToString(planet);
+        PlanetFragment planetFragment = PlanetFragment.newInstance(str);
+        ft.add(R.id.container, planetFragment);
+        ft.commit();
+        fm.executePendingTransactions();
     }
 
     public void onClickOpenWeb(View view) {
