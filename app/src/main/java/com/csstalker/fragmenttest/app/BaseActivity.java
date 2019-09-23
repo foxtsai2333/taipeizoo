@@ -33,4 +33,11 @@ public class BaseActivity extends AppCompatActivity {
     private boolean isLoadingHintShowing() {
         return loadingHint != null && loadingHint.isShowing();
     }
+
+    public String checkDisplayText(String text) {
+        if (text == null)
+            return "";
+        else
+            return text.trim();
+    }
 }

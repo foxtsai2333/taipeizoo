@@ -1,5 +1,6 @@
 package com.csstalker.fragmenttest.app;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,13 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.csstalker.fragmenttest.R;
+import com.csstalker.fragmenttest.adapter.OnZoneItemClickListener;
 import com.csstalker.fragmenttest.adapter.ZoneAdapter;
 import com.csstalker.fragmenttest.api.APITool;
+import com.csstalker.fragmenttest.gson.GsonTool;
 import com.csstalker.fragmenttest.gson.object.ZoneBase;
+import com.csstalker.fragmenttest.gson.object.ZoneData;
 import com.csstalker.fragmenttest.task.JsonHttpTask;
 import com.csstalker.fragmenttest.task.OnJsonTaskCompleteListener;
+import com.google.gson.Gson;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements OnZoneItemClickListener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -46,6 +51,7 @@ public class HomeActivity extends BaseActivity {
                     zoneRecyclerView.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
                     zoneRecyclerView.setHasFixedSize(true);
                     zoneRecyclerView.setAdapter(adapter);
+                    adapter.setOnZoneItemClickListener(HomeActivity.this);
                 }
             }
         });
@@ -53,4 +59,12 @@ public class HomeActivity extends BaseActivity {
         task.execute();
     }
 
+    @Override
+    public void onClickZone(ZoneData zone) {
+        Log.d(TAG, "onClickZone: " + zone.name);
+        Intent intent = new Intent(this, ZoneActivity.class);
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.putExtra("zone", GsonTool.getInstance().objectToString(zone));
+        startActivity(intent);
+    }
 }

@@ -15,6 +15,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.csstalker.fragmenttest.R;
 import com.csstalker.fragmenttest.gson.object.ZoneData;
 import com.csstalker.fragmenttest.gson.object.ZoneResult;
+import com.csstalker.fragmenttest.image.GlideConfig;
 
 import java.util.List;
 
@@ -24,15 +25,13 @@ public class ZoneAdapter extends RecyclerView.Adapter<ZoneAdapter.ZoneViewHolder
     private Context context;
     private List<ZoneData> zoneList;
     private OnZoneItemClickListener zicListener;
-    private final RequestOptions ro;
 
     public ZoneAdapter(Context context, List<ZoneData> zoneList) {
         this.context = context;
         this.zoneList = zoneList;
-        ro = new RequestOptions().placeholder(R.drawable.placeholder_cat);
     }
 
-    public void setZoneItemClickListener(OnZoneItemClickListener zicListener) {
+    public void setOnZoneItemClickListener(OnZoneItemClickListener zicListener) {
         this.zicListener = zicListener;
     }
 
@@ -48,11 +47,11 @@ public class ZoneAdapter extends RecyclerView.Adapter<ZoneAdapter.ZoneViewHolder
     public void onBindViewHolder(@NonNull ZoneViewHolder holder, int position) {
         final ZoneData zone = zoneList.get(position);
         // 圖片
-        String image_url = zone.img;
-        if (image_url != null && !"".equals(image_url)) {
+        String imageUrl = zone.img;
+        if (imageUrl != null && !"".equals(imageUrl)) {
             Glide.with(context)
-                    .load(image_url)
-                    .apply(ro)
+                    .load(imageUrl)
+                    .apply(GlideConfig.getInstance().getGlideOption())
                     .into(holder.zoneImage);
         }
         // 標題
