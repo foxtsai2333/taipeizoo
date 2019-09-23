@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context=".app.ZoneActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- android:background="#ccc" -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/zone_content_layout"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff">
+                <ImageView
+                    android:id="@+id/zone_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/placeholder_cat" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp">
+
+                    <TextView
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/zone_desc_text"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:text="@string/trash_talk"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        tools:text="每個月的第一個星期二跟星期五休息，國定假日也休息"
+                        android:layout_marginTop="10dp"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:textSize="14sp"
+                        android:id="@+id/zone_open_hour_desc_text"
+                        android:layout_below="@id/zone_desc_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <RelativeLayout
+                        android:layout_marginBottom="10dp"
+                        android:layout_below="@id/zone_open_hour_desc_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/zone_type_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_toStartOf="@id/zone_web_text"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            tools:text="室內區"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:text="@string/open_in_browser"
+                            android:id="@+id/zone_web_text"
+                            android:singleLine="true"
+                            android:textSize="14sp"
+                            android:textColor="#4287f5"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:onClick="onClickOpenWeb"
+                            android:layout_alignParentEnd="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:background="#fff"
+                android:id="@+id/zone_planet_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <RelativeLayout
+                    android:id="@+id/zone_planet_title_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_alignParentTop="true"
+                        android:layout_width="match_parent"
+                        android:background="#ccc"
+                        android:layout_height="1dp"/>
+
+                    <TextView
+                        android:id="@+id/zone_planet_title_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/planet_data"
+                        android:textStyle="bold"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="18sp"/>
+
+                    <!-- todo: 示意圖看不出來有沒有線, 但沒有感覺比例怪怪的 -->
+                    <RelativeLayout
+                        android:layout_below="@id/zone_planet_title_text"
+                        android:layout_width="match_parent"
+                        android:background="#ccc"
+                        android:layout_height="1dp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_below="@id/zone_planet_title_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/planet_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
