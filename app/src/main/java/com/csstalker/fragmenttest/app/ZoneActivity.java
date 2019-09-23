@@ -86,6 +86,8 @@ public class ZoneActivity extends BaseActivity implements OnPlanetItemClickListe
             if (memo == null || "".equals(memo))
                 memo = getString(R.string.empty_open_hour_text);
             openHourText.setText(memo);
+            // 分區
+            zoneTypeText.setText(checkDisplayText(zone.category));
 
             // 用館名去拿其他東西
             getPlanetOfZone(checkDisplayText(zone.name));

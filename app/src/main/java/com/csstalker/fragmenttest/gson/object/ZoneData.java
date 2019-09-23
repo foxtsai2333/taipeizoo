@@ -16,6 +16,10 @@ public class ZoneData {
     @SerializedName("E_Info")
     public String info;
 
+    // 分區
+    @SerializedName("E_Category")
+    public String category;
+
     // 休館資料 (空白顯示 "無休館資料")
     @SerializedName("E_Memo")
     public String memo;
