@@ -18,7 +18,8 @@
             android:layout_height="120dp"
             android:src="@drawable/placeholder_cat"
             android:scaleType="centerCrop"
-            android:contentDescription="zone img" />
+            android:contentDescription="zone img"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/zone_title_text"

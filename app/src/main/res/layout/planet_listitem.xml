@@ -18,7 +18,8 @@
             android:layout_height="100dp"
             android:src="@drawable/placeholder_cat"
             android:scaleType="centerCrop"
-            android:contentDescription="planet img" />
+            android:contentDescription="planet img"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/planet_title_text"

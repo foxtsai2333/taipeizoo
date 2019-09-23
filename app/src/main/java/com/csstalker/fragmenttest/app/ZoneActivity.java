@@ -132,7 +132,7 @@ public class ZoneActivity extends BaseActivity implements OnPlanetItemClickListe
         if (zone != null) {
             String url = zone.webUrl;
             if (url == null) {
-                Toast.makeText(this, "找不到相關網頁...", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.web_link_not_found), Toast.LENGTH_LONG).show();
             } else {
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));

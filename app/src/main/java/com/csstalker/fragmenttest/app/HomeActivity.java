@@ -1,11 +1,17 @@
 package com.csstalker.fragmenttest.app;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.csstalker.fragmenttest.R;
 import com.csstalker.fragmenttest.adapter.OnZoneItemClickListener;
@@ -18,12 +24,16 @@ import com.csstalker.fragmenttest.task.JsonHttpTask;
 import com.csstalker.fragmenttest.task.OnJsonTaskCompleteListener;
 import com.google.gson.Gson;
 
-public class HomeActivity extends BaseActivity implements OnZoneItemClickListener {
+public class HomeActivity extends BaseActivity implements OnZoneItemClickListener,
+        NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
 
     // view
-    RecyclerView zoneRecyclerView;
+    private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private RecyclerView zoneRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +41,32 @@ public class HomeActivity extends BaseActivity implements OnZoneItemClickListene
         setContentView(R.layout.activity_home);
 
         findviews();
+        setlistener();
         init();
     }
 
     private void findviews() {
+        // 設定 toolbar
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
         zoneRecyclerView = findViewById(R.id.zone_recyclerview);
+    }
+
+    private void setlistener() {
+        // 讓 toolbar 上的標題按鈕跟抽屜開關同步作動
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                toolbar,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        // 設定選單項目點選的 listener
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     private void init() {
@@ -57,6 +88,11 @@ public class HomeActivity extends BaseActivity implements OnZoneItemClickListene
         });
         showLoadingHint();
         task.execute();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        return false;
     }
 
     @Override

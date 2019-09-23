@@ -21,4 +21,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="planet_alias">別名</string>
+    <string name="planet_desc">簡介</string>
+    <string name="planet_identify">辨認方式</string>
+    <string name="planet_functional">功能性</string>
+    <string name="planet_update_date">最後更新：</string>
+    <string name="open_in_browser">在網頁開啟</string>
+    <string name="planet_data">植物資料</string>
+    <string name="drawer_main_title">側邊選單的主標題</string>
+    <string name="drawer_sub_title">側邊選單的次要標題</string>
+    <string name="web_link_not_found">找不到相關網頁...</string>
 </resources>
