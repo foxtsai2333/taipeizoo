@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.util.LogTime;
+import com.bumptech.glide.util.Util;
 import com.csstalker.fragmenttest.R;
 import com.csstalker.fragmenttest.adapter.OnPlanetItemClickListener;
 import com.csstalker.fragmenttest.adapter.PlanetAdapter;
@@ -26,6 +29,8 @@ import com.csstalker.fragmenttest.utils.Utils;
 import java.util.List;
 
 public class ZoneFragment extends Fragment implements OnPlanetItemClickListener {
+
+    private static final String TAG = ZoneFragment.class.getSimpleName();
 
     private static final String ARG_ZONE = "ARG_ZONE";
     private static final String ARG_PLANET = "ARG_PLANET";
@@ -76,6 +81,7 @@ public class ZoneFragment extends Fragment implements OnPlanetItemClickListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView");
         // inflate layout
         View itemView = inflater.inflate(R.layout.fragment_zone, container, false);
         // findview
@@ -96,6 +102,8 @@ public class ZoneFragment extends Fragment implements OnPlanetItemClickListener 
         if (zone == null) {
             Toast.makeText(getContext(), "something wrong...", Toast.LENGTH_LONG).show();
         } else {
+            // 設定標題
+            updateTitle(Utils.getInstance().checkDisplayText(zone.name));
             // 設定該館的資訊
             // 圖片
             String imageUrl = zone.img;
@@ -131,5 +139,14 @@ public class ZoneFragment extends Fragment implements OnPlanetItemClickListener 
     public void onClickPlanet(PlanetData planet) {
         if (picListener != null)
             picListener.onClickPlanet(planet);
+    }
+
+    // 設定標題
+    private void updateTitle(String title) {
+        try {
+            getActivity().setTitle(title);
+        } catch (Exception e) {
+            Log.e(TAG, "updateTitle: " + e.getMessage());
+        }
     }
 }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.util.LogTime;
 import com.csstalker.fragmenttest.R;
 import com.csstalker.fragmenttest.adapter.OnPlanetItemClickListener;
 import com.csstalker.fragmenttest.adapter.PlanetAdapter;
@@ -118,8 +119,10 @@ public class ZoneActivity extends BaseActivity implements OnPlanetItemClickListe
         FragmentTransaction ft = fm.beginTransaction();
         String str = GsonTool.getInstance().objectToString(planet);
         PlanetFragment planetFragment = PlanetFragment.newInstance(str);
-        ft.add(R.id.container, planetFragment);
-        ft.commit();
+        // 把 zone fragment 換成 planet fragment
+        ft.replace(R.id.container, planetFragment, "planet")
+                .addToBackStack("zoneToPlanet")
+                .commit();
         fm.executePendingTransactions();
     }
 
@@ -139,6 +142,22 @@ public class ZoneActivity extends BaseActivity implements OnPlanetItemClickListe
     @Override
     public boolean onSupportNavigateUp() {
         // click action bar back
+        Log.d(TAG, "onSupportNavigateUp");
+        onBackPressed();
         return true;
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        // click back btn
+        Log.d(TAG, "onBackPressed");
+        // 先檢查現在是不是顯示植物
+        if (fm.findFragmentByTag("planet") != null) {
+            // 如果有的話, 先跳回 zone
+            fm.popBackStack("zoneToPlanet", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

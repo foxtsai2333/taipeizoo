@@ -3,6 +3,7 @@ package com.csstalker.fragmenttest.app;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,11 @@ import com.csstalker.fragmenttest.gson.object.PlanetData;
 import com.csstalker.fragmenttest.image.GlideConfig;
 import com.csstalker.fragmenttest.utils.Utils;
 
+import okhttp3.internal.Util;
+
 public class PlanetFragment extends Fragment {
+
+    private static final String TAG = PlanetFragment.class.getSimpleName();
 
     private static final String ARG_PLANET = "ARG_PLANET";
 
@@ -50,6 +55,7 @@ public class PlanetFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             planetStr = getArguments().getString(ARG_PLANET);
@@ -59,6 +65,7 @@ public class PlanetFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView");
         // inflate view
         View itemView = inflater.inflate(R.layout.fragment_planet, container, false);
         planetImage = itemView.findViewById(R.id.planet_image);
@@ -84,6 +91,8 @@ public class PlanetFragment extends Fragment {
 
             // set data
             if (planet != null) {
+                // 顯示標題
+                updateTitle(Utils.getInstance().checkDisplayText(planet.chineseName));
                 // 圖片
                 String imageUrl = planet.img;
                 if (imageUrl != null && !"".equals(imageUrl)) {
@@ -107,6 +116,15 @@ public class PlanetFragment extends Fragment {
                 // 更新日期
                 updateDateText.setText(Utils.getInstance().checkDisplayText(planet.updateDate));
             }
+        }
+    }
+
+    // 設定標題
+    private void updateTitle(String title) {
+        try {
+            getActivity().setTitle(title);
+        } catch (Exception e) {
+            Log.e(TAG, "updateTitle: " + e.getMessage());
         }
     }
 
