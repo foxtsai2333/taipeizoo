@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#815355</color>
-    <color name="colorPrimaryDark">#523249</color>
+    <color name="colorPrimary">#847996</color>
+    <color name="colorPrimaryDark">#756582</color>
     <color name="colorAccent">#f0d2d1</color>
+
+    <!-- drawer header bg -->
+    <color name="drawerStartColor">#eafdf8</color>
+    <color name="drawerEndColor">#e5e9ec</color>
 </resources>

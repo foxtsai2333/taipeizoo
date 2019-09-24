@@ -1,26 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">台北市立動物園</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
-
     <string name="loading">載入中...</string>
     <string name="empty_open_hour_text">無休館資訊</string>
-    <string name="trash_talk">臣亮言：先帝創業未半，而中道崩殂，今天下三分，益州疲弊，此誠危急存亡之秋也。然侍衞之臣，不懈於內，忠志之士，忘身於外者，蓋追先帝之殊遇，欲報之於陛下也。 誠宜開張聖聽，以光先帝遺德，恢弘志士之氣，不宜妄自菲薄，引喻失義，以塞忠諫之路也。 宮中府中，俱爲一體，陟罰臧否，不宜異同。</string>
-    <string name="trash_talk2">室內室外游泳池邊的唱歌烤肉兼熟食與飲料販賣部門的好玩遊樂區</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="planet_alias">別名</string>
     <string name="planet_desc">簡介</string>
     <string name="planet_identify">辨認方式</string>
@@ -28,7 +10,14 @@
     <string name="planet_update_date">最後更新：</string>
     <string name="open_in_browser">在網頁開啟</string>
     <string name="planet_data">植物資料</string>
-    <string name="drawer_main_title">側邊選單的主標題</string>
-    <string name="drawer_sub_title">側邊選單的次要標題</string>
+    <string name="drawer_main_title">台北市立動物園</string>
     <string name="web_link_not_found">找不到相關網頁...</string>
+    <string name="version_info">版本資訊</string>
+    <string name="navigation_drawer_open">開啟側邊選單</string>
+    <string name="navigation_drawer_close">關閉側邊選單</string>
+
+    <!-- misc -->
+    <string name="trash_talk">臣亮言：先帝創業未半，而中道崩殂，今天下三分，益州疲弊，此誠危急存亡之秋也。然侍衞之臣，不懈於內，忠志之士，忘身於外者，蓋追先帝之殊遇，欲報之於陛下也。 誠宜開張聖聽，以光先帝遺德，恢弘志士之氣，不宜妄自菲薄，引喻失義，以塞忠諫之路也。 宮中府中，俱爲一體，陟罰臧否，不宜異同。</string>
+    <string name="trash_talk2">室內室外游泳池邊的唱歌烤肉兼熟食與飲料販賣部門的好玩遊樂區</string>
+    <string name="empty_hint">目前無任何資料</string>
 </resources>

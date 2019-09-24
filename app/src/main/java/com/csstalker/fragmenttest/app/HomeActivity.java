@@ -12,6 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.csstalker.fragmenttest.R;
 import com.csstalker.fragmenttest.adapter.OnZoneItemClickListener;
@@ -34,6 +37,7 @@ public class HomeActivity extends BaseActivity implements OnZoneItemClickListene
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private RecyclerView zoneRecyclerView;
+    private TextView emptyText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,7 @@ public class HomeActivity extends BaseActivity implements OnZoneItemClickListene
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         zoneRecyclerView = findViewById(R.id.zone_recyclerview);
+        emptyText = findViewById(R.id.empty_text);
     }
 
     private void setlistener() {
@@ -74,16 +79,26 @@ public class HomeActivity extends BaseActivity implements OnZoneItemClickListene
         JsonHttpTask task = new JsonHttpTask(APITool.getInstance().getZoneUrl(), ZoneBase.class, new OnJsonTaskCompleteListener() {
             @Override
             public void onTaskComplete(Object object) {
+                Log.d(TAG, "onTaskComplete");
                 dismissLoadingHint();
                 ZoneBase zb = (ZoneBase) object;
-                Log.d(TAG, "onTaskComplete: " + zb.result.zoneList.size());
-                if (zb.result.zoneList != null) {
-                    ZoneAdapter adapter = new ZoneAdapter(HomeActivity.this, zb.result.zoneList);
-                    zoneRecyclerView.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
-                    zoneRecyclerView.setHasFixedSize(true);
-                    zoneRecyclerView.setAdapter(adapter);
-                    adapter.setOnZoneItemClickListener(HomeActivity.this);
+                try {
+                    if (zb != null && zb.result.zoneList.size() > 0) {
+                        Log.d(TAG, "zone list size = " + zb.result.zoneList.size());
+                        emptyText.setVisibility(View.GONE);
+                        ZoneAdapter adapter = new ZoneAdapter(HomeActivity.this, zb.result.zoneList);
+                        zoneRecyclerView.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
+                        zoneRecyclerView.setHasFixedSize(true);
+                        zoneRecyclerView.setAdapter(adapter);
+                        adapter.setOnZoneItemClickListener(HomeActivity.this);
+                    } else {
+                        // 空白
+                        emptyText.setVisibility(View.VISIBLE);
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "onTaskComplete: " + e.getMessage());
                 }
+
             }
         });
         showLoadingHint();
@@ -91,7 +106,13 @@ public class HomeActivity extends BaseActivity implements OnZoneItemClickListene
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_version_info:
+                // 顯示版本資訊
+                Toast.makeText(this, getVersionName(), Toast.LENGTH_LONG).show();
+                return true;
+        }
         return false;
     }
 

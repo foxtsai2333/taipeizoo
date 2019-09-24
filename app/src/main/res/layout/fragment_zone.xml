@@ -138,6 +138,16 @@
                         android:id="@+id/planet_recyclerview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/zone_planet_empty_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="10dp"
+                        android:textSize="16sp"
+                        android:text="@string/empty_hint"/>
+
                 </RelativeLayout>
 
             </RelativeLayout>

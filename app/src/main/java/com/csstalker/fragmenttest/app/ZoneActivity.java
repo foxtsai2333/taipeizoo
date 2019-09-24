@@ -35,6 +35,9 @@ import java.net.URLEncoder;
 public class ZoneActivity extends BaseActivity implements OnPlanetItemClickListener {
 
     private static final String TAG = ZoneActivity.class.getSimpleName();
+
+    private TextView emptyText;
+
     private ZoneData zone;
     private String zoneStr, planetStr;
     private ZoneFragment zoneFragment;
@@ -48,6 +51,8 @@ public class ZoneActivity extends BaseActivity implements OnPlanetItemClickListe
         // 開啟返回按鈕
         ActionBar bar = getSupportActionBar();
         bar.setDisplayHomeAsUpEnabled(true);
+        // 取得 fragment manager
+        fm = getSupportFragmentManager();
 
         // get zone object payload
         zoneStr = getIntent().getStringExtra("zone");
@@ -57,9 +62,13 @@ public class ZoneActivity extends BaseActivity implements OnPlanetItemClickListe
                     .stringToObject(zoneStr, ZoneData.class);
         }
 
+        findviews();
         init();
     }
 
+    private void findviews() {
+        emptyText = findViewById(R.id.empty_text);
+    }
 
     private void init() {
         // 取得該館的植物列表
@@ -68,8 +77,6 @@ public class ZoneActivity extends BaseActivity implements OnPlanetItemClickListe
 
     // 設定介紹跟植物列表
     private void setupFragment() {
-        // 取得 fragment manager
-        fm = getSupportFragmentManager();
         // 建立 fragment transcation
         FragmentTransaction ft = fm.beginTransaction();
         // 新增要加入的 fragment
@@ -98,9 +105,15 @@ public class ZoneActivity extends BaseActivity implements OnPlanetItemClickListe
             public void onTaskComplete(Object object) {
                 dismissLoadingHint();
                 PlanetBase pb = (PlanetBase) object;
-                Log.d(TAG, "onTaskComplete: " + pb.result.planetList.size());
-                planetStr = GsonTool.getInstance().objectToString(pb.result);
-                setupFragment();
+                if (pb != null) {
+                    Log.d(TAG, "planet size = " + pb.result.planetList.size());
+                    emptyText.setVisibility(View.GONE);
+                    planetStr = GsonTool.getInstance().objectToString(pb.result);
+                    setupFragment();
+                } else {
+                    emptyText.setVisibility(View.VISIBLE);
+                    setTitle(getString(R.string.app_name));
+                }
             }
         });
         showLoadingHint();

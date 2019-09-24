@@ -2,25 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-
-    <group android:checkableBehavior="single">
+    <!-- 記得把原本的 checkable behavior 拿掉, 不然點擊後會變成 checked 狀態，看起來很怪-->
+    <group android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:id="@+id/nav_version_info"
+            android:icon="@drawable/info"
+            android:title="@string/version_info" />
     </group>
-
-    <item android:title="其他">
-        <menu>
-            <item
-                android:id="@+id/app_version"
-                android:icon="@android:drawable/ic_menu_info_details"
-                android:title="版本號" />
-        </menu>
-    </item>
 
 </menu>

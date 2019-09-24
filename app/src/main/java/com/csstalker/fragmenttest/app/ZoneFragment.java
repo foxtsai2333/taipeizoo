@@ -42,13 +42,14 @@ public class ZoneFragment extends Fragment implements OnPlanetItemClickListener 
     private TextView zoneTypeText;
     private TextView webText;
     private RecyclerView planetRecyclerView;
+    private TextView planetEmptyText;
 
     private OnPlanetItemClickListener picListener;
 
     // misc
     private ZoneData zone;
     private PlanetResult planetResult;
-    
+
     public ZoneFragment() {
         // Required empty public constructor
     }
@@ -91,6 +92,7 @@ public class ZoneFragment extends Fragment implements OnPlanetItemClickListener 
         zoneTypeText = itemView.findViewById(R.id.zone_type_text);
         webText = itemView.findViewById(R.id.zone_web_text);
         planetRecyclerView = itemView.findViewById(R.id.planet_recyclerview);
+        planetEmptyText = itemView.findViewById(R.id.zone_planet_empty_text);
 
         setZoneData();
         setPlanetData();
@@ -126,13 +128,20 @@ public class ZoneFragment extends Fragment implements OnPlanetItemClickListener 
     }
 
     private void setPlanetData() {
-        // 設定 adapter();
-        PlanetAdapter adapter = new PlanetAdapter(getContext(), planetResult.planetList);
-        planetRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        planetRecyclerView.setHasFixedSize(true);
-        planetRecyclerView.setNestedScrollingEnabled(false);
-        planetRecyclerView.setAdapter(adapter);
-        adapter.setOnClickPlanetItemListener(this);
+        // 設定 adapter
+        if (planetResult == null
+                || planetResult.planetList == null
+                || planetResult.planetList.size() == 0) {
+            planetEmptyText.setVisibility(View.VISIBLE);
+        } else {
+            planetEmptyText.setVisibility(View.GONE);
+            PlanetAdapter adapter = new PlanetAdapter(getContext(), planetResult.planetList);
+            planetRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            planetRecyclerView.setHasFixedSize(true);
+            planetRecyclerView.setNestedScrollingEnabled(false);
+            planetRecyclerView.setAdapter(adapter);
+            adapter.setOnClickPlanetItemListener(this);
+        }
     }
 
     @Override
