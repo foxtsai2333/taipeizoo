@@ -34,10 +34,4 @@ public class BaseActivity extends AppCompatActivity {
         return loadingHint != null && loadingHint.isShowing();
     }
 
-    public String checkDisplayText(String text) {
-        if (text == null)
-            return "";
-        else
-            return text.trim();
-    }
 }

@@ -110,12 +110,6 @@ public class ZoneActivity extends BaseActivity implements OnPlanetItemClickListe
     @Override
     public void onClickPlanet(PlanetData planet) {
         // 原本會跳頁, 改用 fragment 交換
-        /*
-        Intent intent = new Intent(this, PlanetDetailActivity.class);
-        intent.putExtra("planet", GsonTool.getInstance().objectToString(planet));
-        intent.setAction(Intent.ACTION_VIEW);
-        startActivity(intent);
-        */
         FragmentTransaction ft = fm.beginTransaction();
         String str = GsonTool.getInstance().objectToString(planet);
         PlanetFragment planetFragment = PlanetFragment.newInstance(str);
